@@ -1,0 +1,200 @@
+<html>
+<head>
+
+    <head>
+        <button class='gamechanger'>change game</button>
+    
+        <div class='changer'>
+            
+            <div>
+                <a href='index.html'><img src='mymainman.png' id='image'></a>
+                <a href='index.html' id='link'>main menu</a>
+            </div>
+    
+            <div>
+                <a href='nettsiden.html'><img src='wromwrom.png' id='image'></a>
+                <a href='nettsiden.html' id='link'>cargame</a>
+            </div>
+
+            <div>
+                <a href='snak.html'><img src='snak.png' id='image'></a>
+                <a href='snak.html' id='link'>snake</a>
+            </div>
+            
+        </div>
+    </head>
+
+    <html>
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+        canvas {
+            border:1px solid #d3d3d3;
+            background-color: #f1f1f1;
+        }
+        </style>
+        </head>
+        <body onload="startGame()">
+        <script>
+        
+        var myGamePiece;
+        
+        function startGame() {
+            myGameArea.start();
+            myGamePiece = new component(30, 30, "red", 10, 120);
+        }
+        
+        var myGameArea = {
+            canvas : document.createElement("canvas"),
+            start : function() {
+                this.canvas.width = 480;
+                this.canvas.height = 270;
+                this.context = this.canvas.getContext("2d");
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                this.interval = setInterval(updateGameArea, 20);
+                window.addEventListener('keydown', function (e) {
+                    myGameArea.key = e.keyCode;
+                })
+                window.addEventListener('keyup', function (e) {
+                    myGameArea.key = false;
+                })
+            }, 
+            clear : function(){
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            }
+        }
+        
+        function component(width, height, color, x, y) {
+            this.gamearea = myGameArea;
+            this.width = width;
+            this.height = height;
+            this.speedX = 0;
+            this.speedY = 0;    
+            this.x = x;
+            this.y = y;    
+            this.update = function() {
+                ctx = myGameArea.context;
+                ctx.fillStyle = color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+            this.newPos = function() {
+                this.x += this.speedX;
+                this.y += this.speedY;        
+            }
+        }
+        
+        function updateGameArea() {
+            myGameArea.clear();
+            myGamePiece.speedX = 0;
+            myGamePiece.speedY = 0;    
+            if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1; }
+            if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1; }
+            if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1; }
+            if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1; }
+            myGamePiece.newPos();    
+            myGamePiece.update();
+        }
+        </script>
+        <p>Make sure this window has focus, then you can use the arrow keys on you keyboard to move the red square.</p>
+        </body>
+        </html>
+
+<style>
+    #links {
+        background-color:whitesmoke;
+        color:midnightblue;
+        
+        font-size:18px;
+        margin-left:16px;
+        text-decoration:none;
+        display:inline-block;
+        margin-top:16px;
+        padding-bottom:16px;
+        font-weight:normal;
+    }
+
+    #link:hover {
+        text-decoration:underline;
+    }
+
+    #image {
+        margin-top:-35px;
+        width:24px;
+        height:14px;
+        display:inline-block;
+        
+    }
+
+    #image:hover {
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+
+
+    .gamechanger {
+        background-color:rgb(127, 10, 204);
+        color: white;
+        cursor: pointer;
+        padding: 14px;
+        width: 256px;
+        height:50px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 18px;
+        /*hvor knappen er*/
+        float:left;
+        margin-right:50px;
+        top:76px;
+    }
+
+    .gamechanger:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .games:after {
+        content: "\2212";
+    }
+
+    .gamechanger:hover {
+        background-color:rgb(108, 10, 173);
+    }
+        
+
+    .changer {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: whitesmoke;
+        
+        width:220px;
+        margin-top:50px;
+        
+        float:left;
+        margin-left:-315px;
+        
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 2;  
+    }
+    </style>
+
+<script>
+    var coll = document.getElementsByClassName('gamechanger');
+    var i;
+        
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener('click', function() {
+        this.classList.toggle('games');
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        } 
+        });
+    }
+  </script>
