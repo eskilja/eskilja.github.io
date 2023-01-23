@@ -58,10 +58,10 @@ var myGameArea = {
 function updateGameArea() {
     myGameArea.clear();
     /*først betingelse så hva som skjer*/
-    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1; } 
+/*    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1; } 
     if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1; }
     if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1; } 
-    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1; }
+    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1; } */
     for(var i = 0; i< myGameArea.snake.length; i++) {
         myGameArea.drawsquare(myGameArea.snake[i].x, myGameArea.snake[i].y, 'red');
     }   
