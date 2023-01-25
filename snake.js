@@ -12,10 +12,12 @@ var myGameArea = {
         this.squaresize = 20;
         this.canvas.width = this.boardsizex * this.squaresize;
         this.canvas.height = this.boardsizey * this.squaresize;
+        //            halen                       hodet 
         this.snake = [{x:10, y:10}, {x:9, y:10}, {x:8, y:10}]
+        this.direction = {x:-1, y:0}
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateGameArea, 1000);
         window.addEventListener('keydown', function (e) {
             console.log("Knapp trykket")
             myGameArea.key = e.keyCode;
@@ -35,6 +37,13 @@ var myGameArea = {
 
 function updateGameArea() {
     myGameArea.clear();
+
+    var snakehead = myGameArea.snake.slice(-1);
+    var newhead = {x:snakehead.x+myGameArea.direction.x, y:snakehead.y+myGameArea.direction.y};
+
+    myGameArea.snake.push(newhead);
+    myGameArea.snake.shift();
+
     for(var i = 0; i< myGameArea.snake.length; i++) {
         myGameArea.drawsquare(myGameArea.snake[i].x, myGameArea.snake[i].y, 'red');
     }   
