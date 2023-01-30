@@ -17,10 +17,29 @@ var myGameArea = {
         this.direction = {x:-1, y:0}
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 1000);
+        this.interval = setInterval(updateGameArea, 500);
         window.addEventListener('keydown', function (e) {
             console.log("Knapp trykket")
-            myGameArea.key = e.keyCode;
+            switch(e.key){
+                case 'ArrowLeft':
+                    myGameArea.direction = {x:-1, y:0};
+                    console.log('venstre');
+                    break;
+                case 'ArrowUp':
+                    myGameArea.direction = {x:0, y:-1};
+                    console.log('opp');
+                    break;
+                case 'ArrowRight':
+                    myGameArea.direction = {x:1, y:0};
+                    console.log('höyre');
+                    break;
+                case 'ArrowDown':
+                    myGameArea.direction = {x:0, y:1};
+                    console.log('ned');
+                    break;
+                              
+            }
+            
         })
 
     },
@@ -38,10 +57,24 @@ var myGameArea = {
 function updateGameArea() {
     myGameArea.clear();
 
-    var snakehead = myGameArea.snake.slice(-1);
-    var newhead = {x:snakehead.x+myGameArea.direction.x, y:snakehead.y+myGameArea.direction.y};
+    var snakehead = myGameArea.snake[myGameArea.snake.length -1];
+    var newhead = {x:snakehead.x + myGameArea.direction.x, y:snakehead.y + myGameArea.direction.y};
 
-    myGameArea.snake.push(newhead);
+    if (newhead.x < 0){
+        newhead.x = myGameArea.boardsizex-1;
+    }
+    if (newhead.x > myGameArea.boardsizex-1){
+        newhead.x = 0;
+    }
+    if (newhead.y < 0){
+        newhead.y = myGameArea.boardsizey-1;
+    }
+    if (newhead.y > myGameArea.boardsizey-1){
+        newhead.y = 0;
+    }
+
+
+    myGameArea.snake.push(newhead); 
     myGameArea.snake.shift();
 
     for(var i = 0; i< myGameArea.snake.length; i++) {
