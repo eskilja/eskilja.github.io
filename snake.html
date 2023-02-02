@@ -1,4 +1,5 @@
 <head>
+    <!--knappene som sier hvor du skal dra hvis du trykker på  --> 
     <button class='gamechanger'>change game</button>
 
     <div class='changer'>
@@ -26,13 +27,15 @@
 <head>
     <title>snake</title>
 </head>
-
+<!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
 <body onload="startGame()">
 
+<!--kobler snake.js og snake.html sammen-->
 <script src="snake.js"></script>
 
 
 </body>
+<!--her er restart knappen og hvis den blir trykket så kaller den funksjonen restart-->
 <button type="button" onclick="restart()">restart</button>
 
 
@@ -40,7 +43,8 @@
 
 <style>
 /*<body onload = 'tegn()'>    blueviolet*/
-
+/*definerer hvordan masse ting skal se ut 
+  f.eks hvor store de skal være hvilken farge de skal ha osv.*/
 canvas {
 border:1px solid #d3d3d3;
 background-color: #f1f1f1;
@@ -127,6 +131,7 @@ background-color: #f1f1f1;
 }
 </style>
 
+<!--kort skript som definerer mye rart med endre spill knappen-->
 <script>
     var coll = document.getElementsByClassName('gamechanger');
     var i;
