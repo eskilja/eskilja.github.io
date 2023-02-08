@@ -41,18 +41,22 @@ var myGameArea = {
                 case 'ArrowLeft':
                     myGameArea.direction = {x:-1, y:0};
                     console.log('venstre');
+                    death = 0
                     break;
                 case 'ArrowUp':
                     myGameArea.direction = {x:0, y:-1};
                     console.log('opp');
+                    death = 0
                     break;
                 case 'ArrowRight':
                     myGameArea.direction = {x:1, y:0};
                     console.log('höyre');
+                    death = 0
                     break;
                 case 'ArrowDown':
                     myGameArea.direction = {x:0, y:1};
                     console.log('ned');
+                    death = 0
                     break;
                               
             }
@@ -71,13 +75,35 @@ var myGameArea = {
     }
 }
 
+//sier at hvis funksjonen change timer blir kalt så skal den sjekke om interval_ms er større en 25 
+//er det dette så vil den ikke endre hvor raskt spillet oppdateres ellers så vil det oppdateres 25 ms raskere
+function speedup(){
+
+if (myGameArea.interval_ms > 0){
+    myGameArea.interval_ms = myGameArea.interval_ms - 25;
+}
+}
+//lager en funksjon som vill cleare set interval og kaller change timer for å endre timeren 
+//så lager en ny timer som oppdateres litt raskere
+function changeTimer (){
+clearInterval(myGameArea.interval);
+myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
+}
+
 function restart(){
     // sier at hvis en knapp med funksjonen restart bir trykket så vil slangen blis satt til start posisjon
     // og maten vil finne en ny posisjon
     myGameArea.snake = [{x:10, y:10}, {x:9, y:10}, {x:8, y:10}]
-    myGameArea.drawfoodx = Math.floor(Math.random() * myGameArea.squaresize)
-    myGameArea.drawfoody = Math.floor(Math.random() * myGameArea.squaresize)
+    myGameArea.direction = {x:-1, y:0};
+    myGameArea.drawfoodx = Math.floor(Math.random() * myGameArea.squaresize);
+    myGameArea.drawfoody = Math.floor(Math.random() * myGameArea.squaresize);
+    myGameArea.interval_ms = 500
+    changeTimer();
+    console.log('restart eller død')
 }
+
+
+
 
 function updateGameArea() {
     myGameArea.clear();
@@ -86,23 +112,20 @@ function updateGameArea() {
     var snakehead = myGameArea.snake[myGameArea.snake.length -1];
     var newhead = {x:snakehead.x + myGameArea.direction.x, y:snakehead.y + myGameArea.direction.y};
 
+    
+
     // hvis hodet er på en hvis plass så vil plassen endres
-    if (newhead.x < 0){
-        newhead.x = myGameArea.boardsizex-1;
-    }
-    if (newhead.x > myGameArea.boardsizex-1){
-        newhead.x = 0;
-    }
-    if (newhead.y < 0){
-        newhead.y = myGameArea.boardsizey-1;
-    }
-    if (newhead.y > myGameArea.boardsizey-1){
-        newhead.y = 0;
+    if ((newhead.x < 0) || (newhead.x > myGameArea.boardsizex-1) || (newhead.y < 0) || (newhead.y > myGameArea.boardsizey-1)) {
+        alert('du døde');
+        restart();
+    } else{
+        //kaller en funksjon som gjør slangen lengere og etter det fjærner halen sånn at den ikke blir for lang
+        myGameArea.snake.push(newhead);
+        myGameArea.snake.shift();
     }
 
-    //kaller en funksjon som gjør slangen lengere og etter det fjærner halen sån at den ikke blir for lang
-    myGameArea.snake.push(newhead);
-    myGameArea.snake.shift();
+
+    
  
 
     //sier hva maten skal se ut som og hvor den er
@@ -110,15 +133,13 @@ function updateGameArea() {
 
     myGameArea.drawsquare(myGameArea.snakeh.x, myGameArea.snakeh.y, 'blue')
 
-
-
-
     //sier at hvis slangen sitt hode er på samme blokk som maten så vil maten finne en ny plass og slangen vil bli lengere
     if (newhead.x == myGameArea.drawfoodx && newhead.y == myGameArea.drawfoody){
-        myGameArea.snake.push(newhead)
-        myGameArea.drawfoodx = Math.floor(Math.random() * myGameArea.squaresize)
-        myGameArea.drawfoody = Math.floor(Math.random() * myGameArea.squaresize)
-        f1();
+        myGameArea.snake.push(newhead);
+        myGameArea.drawfoodx = Math.floor(Math.random() * myGameArea.squaresize);
+        myGameArea.drawfoody = Math.floor(Math.random() * myGameArea.squaresize);
+        speedup();
+        changeTimer();
     } /*else {
         myGameArea.snake.shift();
     }*/
@@ -127,27 +148,5 @@ function updateGameArea() {
     for(var i = 0; i < myGameArea.snake.length; i++) {
         //definerer hvordan slangen skal se ut 
         myGameArea.drawsquare(myGameArea.snake[i].x, myGameArea.snake[i].y, 'red');
-        /*if (newhead.x == myGameArea.snake[i].x && newhead.y == myGameArea.snake[i].y){
-            myGameArea.direction = {x:-0, y:0};
-            myGameArea.snake = [{x:10, y:10}, {x:9, y:10}, {x:8, y:10}]
-        }*/
     }  
-
-    
-    //sier at hvis funksjonen change timer blir kalt så skal den sjekke om interval_ms er større en 50 
-    //er det dette så vil den ikke endre hvor raskt spillet oppdateres ellers så vil det oppdateres 25 ms raskere
-    function changeTimer(){
-        
-        if (myGameArea.interval_ms > 50){
-            myGameArea.interval_ms = myGameArea.interval_ms - 25;
-        }
-    }
-    //lager en funksjon som vill cleare set interval og kaller change timer for å endre timeren 
-    //så lager en ny timer som oppdateres litt raskere
-    function f1 (){
-        clearInterval(myGameArea.interval);
-        changeTimer();
-        myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
-    }
-
 }
