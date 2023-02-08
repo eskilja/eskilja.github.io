@@ -120,13 +120,22 @@ function updateGameArea() {
         restart();
     } else{
         //kaller en funksjon som gjør slangen lengere og etter det fjærner halen sånn at den ikke blir for lang
-        myGameArea.snake.push(newhead);
-        myGameArea.snake.shift();
+        var crash = false;
+        for (var i = 0; i < myGameArea.snake.length; i++){
+            if ((newhead.x ==  myGameArea.snake[i].x) && (newhead.y ==  myGameArea.snake[i].y)){
+                crash = true;
+            }
+        }
+
+        if (crash){
+            restart();
+            alert('du kræsjet i deg selv')
+        } else {
+            myGameArea.snake.push(newhead);
+            myGameArea.snake.shift();
+        }
+        
     }
-
-
-    
- 
 
     //sier hva maten skal se ut som og hvor den er
     myGameArea.drawsquare(myGameArea.drawfoodx, myGameArea.drawfoody, 'green')
