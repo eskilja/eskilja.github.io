@@ -1,0 +1,156 @@
+<head>
+    <!--knappene som sier hvor du skal dra hvis du trykker på  --> 
+    <button class='gamechanger'>change game</button>
+
+    <div class='changer'>
+        
+        <div>
+            <a href='index.html'><img src='mymainman.png' id='image'></a>
+            <a href='index.html' id='link'>main menu</a>
+        </div>
+
+        <div>
+            <a href='nettsiden.html'><img src='wromwrom.png' id='image'></a>
+            <a href='nettsiden.html' id='link'>cargame</a>
+        </div>
+
+        <div>
+            <a href='testing.html'></a>
+            <a href='testing.html' id='link'>testing do not</a>
+        </div>
+
+        
+    </div>
+</head>
+
+
+<head>
+    <title>pong</title>
+</head>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+    canvas {
+        border:1px solid #d3d3d3;
+        background-color: #f1f1f1;
+    }
+    </style>
+</head>
+<!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
+<body onload="startGame()">
+
+<!--kobler pong.js og pong.html sammen-->
+<script src="pong.js"></script>
+
+
+</body>
+
+
+<style>
+/*<body onload = 'tegn()'>    blueviolet*/
+/*definerer hvordan masse ting skal se ut 
+  f.eks hvor store de skal være hvilken farge de skal ha osv.*/
+canvas {
+border:1px solid #d3d3d3;
+background-color: #f1f1f1;
+}
+
+#links {
+    background-color:whitesmoke;
+    color:midnightblue;
+      
+    font-size:18px;
+    margin-left:16px;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:16px;
+    padding-bottom:16px;
+    font-weight:normal;
+}
+
+#link:hover {
+    text-decoration:underline;
+}
+
+#image {
+    margin-top:-35px;
+    width:24px;
+    height:14px;
+    display:inline-block;
+      
+}
+
+#image:hover {
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+
+.gamechanger {
+    background-color:rgb(127, 10, 204);
+    color: white;
+    cursor: pointer;
+    padding: 14px;
+    width: 256px;
+    height:50px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+  
+    float:right;
+    margin-right:50px;
+    top:76px;
+}
+
+.gamechanger:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.games:after {
+    content: "\2212";
+}
+
+.gamechanger:hover {
+    background-color:rgb(108, 10, 173);
+}
+    
+
+.changer {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: whitesmoke;
+      
+    width:220px;
+    margin-top:50px;
+    float:right;
+    margin-right:-256px;
+    
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;  
+}
+</style>
+
+<!--kort skript som definerer mye rart med endre spill knappen-->
+<script>
+    var coll = document.getElementsByClassName('gamechanger');
+    var i;
+        
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener('click', function() {
+        this.classList.toggle('games');
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        } 
+        });
+    }
+  </script>
