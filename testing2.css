@@ -1,8 +1,8 @@
 * {
     box-sizing: border-box;
-}
-
-body{
+  }
+  
+  body {
     background-color: #333;
     color: #fff;
     display: flex;
@@ -12,9 +12,13 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     min-height: 100vh;
     margin: 0;
-}
-
-#canvas{
-    background-color: blueviolet;
+  }
+  
+  #canvas {
+    background: #f0f0f0;
     border-radius: 5px;
-}
+  }
+  
+  #source {
+    display: none;
+  }

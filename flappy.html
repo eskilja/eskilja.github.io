@@ -15,8 +15,8 @@
         </div>
 
         <div>
-            <a href='pong.html'><img scr="" id="image"> </a>
-            <a href='pong.html' id='link'>pong</a>
+            <a href='snake.html'><img src='snak.png' id='image'></a>
+            <a href='snak.html' id='link'>testing do not</a>
         </div>
 
         
@@ -25,18 +25,27 @@
 
 
 <head>
-    <title>snake</title>
+    <title>flappybird</title>
+</head>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+    canvas {
+        border:1px solid #d3d3d3;
+        background-color: black;
+    }
+    </style>
 </head>
 <!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
 <body onload="startGame()">
 
-<!--kobler snake.js og snake.html sammen-->
-<script src="snake.js"></script>
+<!--kobler pong.js og pong.html sammen-->
+<script src="flappy.js"></script>
 
 
 </body>
-<!--her er restart knappen og hvis den blir trykket så kaller den funksjonen restart-->
-<button type="button" onclick="restart()">restart</button>
+
 
 <style>
 /*<body onload = 'tegn()'>    blueviolet*/
