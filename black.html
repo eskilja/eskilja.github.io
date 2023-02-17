@@ -1,0 +1,152 @@
+<html>
+<title>Welcome to Blackjack</title>
+<!--<link href="style.css" rel="stylesheet" type="text/css">
+
+<!-- <script src="bj.js"></script> -->
+<head>
+<script>
+var PlayerScore = 0;
+var DealerScore = 0;
+var Winner = "Nobody";
+var AskAgain = true;
+
+function random(maxValue)
+{
+ return Math.floor(Math.random() * maxValue) + 1;
+}
+
+function pickSuit()
+{
+ suit = random(4);
+
+ if(suit == 1)
+ return "Spades";
+
+ if(suit == 2)
+ return "Clubs";
+
+ if(suit == 3)
+ return "Diamonds";
+
+ return "Hearts";
+}
+
+function cardName(card)
+{
+ if(card == 1)
+ return "Ace";
+
+ if(card == 11)
+ return "Jack";
+
+ if(card == 12)
+ return "Queen";
+
+ if(card == 13)
+ return "King";
+
+ return ("" + card);
+}
+
+function cardValue(card)
+{
+ if(card == 1)
+ return 11;
+
+ if(card > 10)
+ return 10;
+
+ return card;
+}
+
+function PickACard(strWho)
+{
+ card = random(13);
+ suit = pickSuit();
+
+ alert(strWho + " picked the " + cardName(card) + " of " + suit);
+
+ return cardValue(card);
+}
+
+function Dealer()
+{
+ while(DealerScore < 17)
+ {
+ DealerScore = DealerScore + PickACard("Dealer");
+ }
+}
+
+function User()
+{
+    PlayerScore = PlayerScore + PickACard("You");
+
+}
+function LookAtHands(Winner)
+{
+ if(DealerScore > 21)
+ {
+ alert("House busts! You win!");
+ Winner = "You";
+ }
+ else
+ if((PlayerScore > DealerScore) && (PlayerScore <= 21))
+ {
+ alert("You win!");
+  Winner = "You";
+ }
+ else
+ if(PlayerScore == DealerScore)
+ {
+ alert("Push!");
+  Winner = "Tie";
+ }
+ else
+ {
+ alert("House wins!");
+  Winner = "House";
+ }
+}
+</script>
+</head>
+<body>
+<div><p>Welcome to our Blackjack Table!</p>
+<p id="PlayerScore">Your Score is: </p>
+<p id="DealerScore">Dealer's Score is: </p>
+</div>
+<script>
+
+Dealer();
+alert("Dealer's score is: " + DealerScore);
+document.getElementById('DealerScore').innerHTML = DealerScore;
+
+
+User();
+alert("Your score is: " + PlayerScore);
+document.getElementById("DealerScore").innerHTML = "Dealer's score is: " + DealerScore;
+
+
+while (AskAgain == true )
+{
+    var answer = confirm("Do you want to draw a card?")
+    if (answer == true)
+    {
+        User();
+        alert("Your score is: " + PlayerScore);
+        document.getElementById("PlayerScore").innerHTML = "Your score is: " + PlayerScore;
+
+        if (PlayerScore < 21)
+            {AskAgain = true;}
+
+        else 
+            {AskAgain = false;}
+    }
+    else
+    {
+        AskAgain = false;
+    }
+}
+LookAtHands();
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 var myGamePiece;
 var myObsticales;
 var myScore;
+var hight_score;
 
         
         function startGame() {
@@ -12,6 +13,7 @@ var myScore;
             myObsticales  = [];
             //sier hva my game score skal se ut som 
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+            hight_score = 0
         }
 
         
@@ -194,6 +196,10 @@ var myScore;
             //gir høyere score hver frame 
             myScore.text="SCORE: " + myGameArea.frameNo;
             myScore.update();
+
+            if (hight_score <= myGameArea.frameNo){
+                hight_score = hight_score +1
+            }
             
             //oppdaterer posisjonen din
             myGamePiece.newPos();  
@@ -205,4 +211,3 @@ var myScore;
             if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
             return false;
         }
-        
