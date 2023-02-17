@@ -206,4 +206,3 @@ var myScore;
             return false;
         }
         
-        
