@@ -14,11 +14,7 @@ var hight_score;
             //sier hva my game score skal se ut som 
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
             hight_score = 0
-        }
-
-        
-        
-        
+        }        
         
         var myGameArea = {
             //lager et dokument som heter canvas 
