@@ -48,6 +48,7 @@ var myScore;
         }
         //lager en funksjon som heter component
         function component(width, height, color, x, y, type) {
+            //lafer en masse variabler som skal bli brukt for å lage de forsjellige 
             this.gamearea = myGameArea;
             this.width = width;
             this.height = height;
@@ -58,11 +59,13 @@ var myScore;
             this.type = type;   
             this.score = 0; 
             this.update = function() {
+                //his det typen er tekst så skal du sette høden bredden hva slags farge den er og fonten 
                 ctx = myGameArea.context;
                 if (this.type == "text"){
                     ctx.font = this.width + " " + this.height;
                     ctx.fillStyle = color;
                     ctx.fillText(this.text, this.x, this.y);
+                // ellers så skal de lage en boks
                 } else{
                 ctx.fillStyle = color;
                 ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.width, this.height);
@@ -126,6 +129,8 @@ var myScore;
         myObsticales=[];
         changeTimer();
         console.log('restart eller død')
+        myGameArea.frameNo =  0;
+
     }
             
         
@@ -152,16 +157,15 @@ var myScore;
                 //minimum mellomromet mellom rørene er 70
                 minGap = 70;
                 //maximum høyden mellom rørene er 200
-                maxGap = 200;
+                maxGap = 150;
                 //lager et tilfeldig tall mellom 70 og 200 
                 gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap); 
                 //lager et nytt rør som er mellom 20 og 200 høy og har et gap på mellom 70 og 200
-                myObsticales.push(new component(10, height, "green", x, 0));
-                myObsticales.push(new component(10, x - height - gap, "green", x, height + gap));
+                myObsticales.push(new component(40, height, "green", x, 0));
+                myObsticales.push(new component(40, x - height - gap, "green", x, height + gap));
+                
             } 
-            if (myGameArea.frameNo == 1 || everyinterval(800)){
-
-            }
+            
             //sletter alt på brettet
             myGameArea.clear();
             //setter farten til 0
@@ -187,13 +191,19 @@ var myScore;
                 myObsticales[i].newPos();
                 myObsticales[i].speedX= -1;
             }
-            //gir høyere score
+            //gir høyere score hver frame 
             myScore.text="SCORE: " + myGameArea.frameNo;
-            //oppdaterer posisjonendin
+            myScore.update();
+            
+            //oppdaterer posisjonen din
             myGamePiece.newPos();  
             myGamePiece.gravity();  
             myGamePiece.update();
             
+        }
+        function everyinterval(n) {
+            if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+            return false;
         }
         
         
