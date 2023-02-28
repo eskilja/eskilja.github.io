@@ -2,18 +2,20 @@ var myGamePiece;
 var myObsticales;
 var myScore;
 var hight_score;
+var old_high_score;
 
         
         function startGame() {
             //kjører mygamearea
             myGameArea.start();
             //sier hvordan boksen skal se ut og hvor den skal være
-            myGamePiece = new component(40, 40, "red", 40, 200);
+            myGamePiece = new component(45, 40, "flappy2.png", 40, 200, "image");
             //sier at myObsticales er en liste
             myObsticales  = [];
             //sier hva my game score skal se ut som 
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
-            hight_score = 0
+            hight_score = new component('30px', "Consolas", "black", 215, 70, "text");
+            old_high_score =0;
         }        
         
         var myGameArea = {
@@ -25,7 +27,9 @@ var hight_score;
                 this.canvas.width = 480;
                 this.canvas.height = 480;
                 this.context = this.canvas.getContext("2d");
+                var imgurl = "C:\Users\esjaa003\OneDrive - Osloskolen\proramering\jsgames\background.png";
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                 
                 //lager frameNO og setter den til 0
                 this.frameNo = 0;
                 //lager en funksjon som heter interval_ms
@@ -46,7 +50,11 @@ var hight_score;
         }
         //lager en funksjon som heter component
         function component(width, height, color, x, y, type) {
-            //lafer en masse variabler som skal bli brukt for å lage de forsjellige 
+            if (type == "image") {
+                this.image = new Image();
+                this.image.src = color;
+              }
+            //lager en masse variabler som skal bli brukt for å lage de forsjellige 
             this.gamearea = myGameArea;
             this.width = width;
             this.height = height;
@@ -57,17 +65,23 @@ var hight_score;
             this.type = type;   
             this.score = 0; 
             this.update = function() {
-                //his det typen er tekst så skal du sette høden bredden hva slags farge den er og fonten 
+                //hvis det typen er tekst så skal du sette høden bredden hva slags farge den er og fonten 
                 ctx = myGameArea.context;
                 if (this.type == "text"){
                     ctx.font = this.width + " " + this.height;
                     ctx.fillStyle = color;
                     ctx.fillText(this.text, this.x, this.y);
+                } else if (type == "image") {
+                    ctx.drawImage(this.image,
+                    this.x,
+                    this.y,
+                    this.width, this.height);
+                }
                 // ellers så skal de lage en boks
-                } else{
-                ctx.fillStyle = color;
-                ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.width, this.height);
-            }}
+                else{
+                    ctx.fillStyle = color;
+                    ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.width, this.height);
+                }}
             //lager en funksjon som heter newpos
             this.newPos = function() {
                 this.x += this.speedX;
@@ -100,9 +114,11 @@ var hight_score;
                 //sender den ut at den ikke har blitt truffet 
                 if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
                     crash = false;
-                }
+                    }
                 //hvis ikke så vet den at den har blitt truffet av røret
                 return crash;
+
+                
             }
             
         }
@@ -128,7 +144,7 @@ var hight_score;
         changeTimer();
         console.log('restart eller død')
         myGameArea.frameNo =  0;
-
+        
     }
             
         
@@ -138,9 +154,12 @@ var hight_score;
             //går gjennom alle rørene og sjekkor om du har kræsjet med dem
             for (i = 0; i < myObsticales.length; i += 1) {
                 if (myGamePiece.crashWith(myObsticales[i])) {
+                    //kaller restart funksjonen sånn at spillet starter på nytt etter at du død
+                    restart();
                     return;
                 } 
             }
+
             //legger til 1 til frameNo hver frame
             myGameArea.frameNo += 1;
             //hvis FrameNo er 1 og everyinterval er 200 så
@@ -161,6 +180,7 @@ var hight_score;
                 //lager et nytt rør som er mellom 20 og 200 høy og har et gap på mellom 70 og 200
                 myObsticales.push(new component(40, height, "green", x, 0));
                 myObsticales.push(new component(40, x - height - gap, "green", x, height + gap));
+                
                 
             } 
             
@@ -193,8 +213,15 @@ var hight_score;
             myScore.text="SCORE: " + myGameArea.frameNo;
             myScore.update();
 
-            if (hight_score <= myGameArea.frameNo){
-                hight_score = hight_score +1
+            hight_score.text="high score:" + old_high_score;
+            hight_score.update();
+
+
+            //hvis frameNo er større en old_high_score så vil high scoren din bli større
+            if ( old_high_score <= myGameArea.frameNo){
+                old_high_score= old_high_score + 1;
+                hight_score.text="high score:" + old_high_score;
+                hight_score.update();
             }
             
             //oppdaterer posisjonen din
