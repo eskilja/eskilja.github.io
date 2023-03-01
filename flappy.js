@@ -3,19 +3,21 @@ var myObsticales;
 var myScore;
 var hight_score;
 var old_high_score;
+var myBackground;
 
         
         function startGame() {
             //kjører mygamearea
             myGameArea.start();
             //sier hvordan boksen skal se ut og hvor den skal være
-            myGamePiece = new component(45, 40, "flappy2.png", 40, 200, "image");
+            myGamePiece = new component(40, 33, "flappy3.png", 40, 200, "image");
+            myBackground = new component(1000, 480, "flappybirdback.png", 0, 0, "background");
             //sier at myObsticales er en liste
             myObsticales  = [];
             //sier hva my game score skal se ut som 
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
             hight_score = new component('30px', "Consolas", "black", 215, 70, "text");
-            old_high_score =0;
+            old_high_score = 0;
         }        
         
         var myGameArea = {
@@ -27,7 +29,6 @@ var old_high_score;
                 this.canvas.width = 480;
                 this.canvas.height = 480;
                 this.context = this.canvas.getContext("2d");
-                var imgurl = "C:\Users\esjaa003\OneDrive - Osloskolen\proramering\jsgames\background.png";
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                  
                 //lager frameNO og setter den til 0
@@ -50,7 +51,7 @@ var old_high_score;
         }
         //lager en funksjon som heter component
         function component(width, height, color, x, y, type) {
-            if (type == "image") {
+            if (type == "image" || type == "background") {
                 this.image = new Image();
                 this.image.src = color;
               }
@@ -71,11 +72,16 @@ var old_high_score;
                     ctx.font = this.width + " " + this.height;
                     ctx.fillStyle = color;
                     ctx.fillText(this.text, this.x, this.y);
-                } else if (type == "image") {
+                } else if (type == "image" || type == "background") {
                     ctx.drawImage(this.image,
                     this.x,
                     this.y,
                     this.width, this.height);
+                } else if (type == "background") {
+                    ctx.drawImage(this.image, 
+                        this.x + this.width, 
+                        this.y,
+                        this.width, this.height);
                 }
                 // ellers så skal de lage en boks
                 else{
@@ -86,6 +92,11 @@ var old_high_score;
             this.newPos = function() {
                 this.x += this.speedX;
                 this.y += this.speedY; 
+                if (this.type == "background") {
+                    if (this.x + this.width == 480) {
+                        this.x = 0;
+                    }
+                }
             }
             this.gravity= function(){
                 //sier at hvis fulen treffer taket eller guvet 
@@ -150,6 +161,12 @@ var old_high_score;
         
         
         function updateGameArea() {
+            //sletter alt på brettet
+            myGameArea.clear();
+
+            myBackground.speedX = -1;
+            myBackground.newPos();    
+            myBackground.update();
             var x, height, gap, minHeight, maxHeight, minGap, maxGap;
             //går gjennom alle rørene og sjekkor om du har kræsjet med dem
             for (i = 0; i < myObsticales.length; i += 1) {
@@ -172,7 +189,7 @@ var old_high_score;
                 //lager et tillfeldig tall som er høyden på røret
                 height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
                 //minimum mellomromet mellom rørene er 70
-                minGap = 70;
+                minGap = 80;
                 //maximum høyden mellom rørene er 200
                 maxGap = 150;
                 //lager et tilfeldig tall mellom 70 og 200 
@@ -184,8 +201,7 @@ var old_high_score;
                 
             } 
             
-            //sletter alt på brettet
-            myGameArea.clear();
+            
             //setter farten til 0
             myGamePiece.speedX = 0;
             myGamePiece.speedY = myGamePiece.speedY+0.1;    
