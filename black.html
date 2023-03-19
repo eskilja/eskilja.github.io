@@ -1,8 +1,6 @@
 <html>
 <title>Welcome to Blackjack</title>
-<!--<link href="style.css" rel="stylesheet" type="text/css">
-
-<!-- <script src="bj.js"></script> -->
+<body onload="startGame()">
 <head>
 <script>
 var PlayerScore = 0;
@@ -113,7 +111,8 @@ function LookAtHands(Winner)
 <div><p>Welcome to our Blackjack Table!</p>
 <p id="PlayerScore">Your Score is: </p>
 <p id="DealerScore">Dealer's Score is: </p>
-</div>
+<p>there is no returning from this palce the only thing you can do is to play again and again and again.</p>
+<button onClick="window.location.reload();">play again</button></div>
 <script>
 
 Dealer();

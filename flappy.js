@@ -1,3 +1,4 @@
+// i starten så bare lager vi en masse variabler som vi ikke har definert enda som vi kommer til å trenge senere
 var myGamePiece;
 var myObsticales;
 var myScore;
@@ -66,22 +67,19 @@ var myBackground;
             this.type = type;   
             this.score = 0; 
             this.update = function() {
-                //hvis det typen er tekst så skal du sette høden bredden hva slags farge den er og fonten 
+                //her sjekker den hva slags type vi har sagt at componenten er
                 ctx = myGameArea.context;
+                //hvis componenten er tekst så må du si hvordan teksten skal se ut og hvor den skal være
                 if (this.type == "text"){
                     ctx.font = this.width + " " + this.height;
                     ctx.fillStyle = color;
                     ctx.fillText(this.text, this.x, this.y);
+                //eller hvis typen er et bilde så skal den si hvilket bilde den er hvor den skal være
                 } else if (type == "image" || type == "background") {
-                    ctx.drawImage(this.image,
-                    this.x,
-                    this.y,
-                    this.width, this.height);
+                    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+                //eller hvis typen er en bakgrunn så er det nesten samme som hvis det er et bilde
                 } else if (type == "background") {
-                    ctx.drawImage(this.image, 
-                        this.x + this.width, 
-                        this.y,
-                        this.width, this.height);
+                    ctx.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
                 }
                 // ellers så skal de lage en boks
                 else{
@@ -92,8 +90,11 @@ var myBackground;
             this.newPos = function() {
                 this.x += this.speedX;
                 this.y += this.speedY; 
+                //hvis typen til componenten som blir laget
                 if (this.type == "background") {
+                    //hvis dette er sant så vil den sjekke om x.en til componenten + lengden til componenten er 480
                     if (this.x + this.width == 480) {
+                        //da vil den lage en ny bakgrunn på x 0
                         this.x = 0;
                     }
                 }
@@ -133,11 +134,8 @@ var myBackground;
             }
             
         }
-    function speedup(){
-        if (myGameArea.interval_ms > 5){
-            myGameArea.interval_ms = myGameArea.interval_ms - 1;
-        }
-        }
+        
+    
 
     //lager en funksjon som vill cleare set interval og kaller change timer for å endre timeren 
     //så lager en ny timer som oppdateres litt raskere
@@ -204,6 +202,7 @@ var myBackground;
             
             //setter farten til 0
             myGamePiece.speedX = 0;
+            //plusser 0.1 på mygamepice.speedy hver frame
             myGamePiece.speedY = myGamePiece.speedY+0.1;    
             //hvis den kanppen som er trykket er den riktige kanppen so vil den gå opp 
             if (myGameArea.key && myGameArea.key == 38) {

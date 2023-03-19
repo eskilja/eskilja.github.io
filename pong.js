@@ -1,11 +1,12 @@
 var myGamePiece;
+var myGamePiece2;
         
         function startGame() {
             //kjører mygamearea
             myGameArea.start();
             //sier hvordan boksen skal se ut
             myGamePiece = new component(15, 50, "red", 20, 120);
-            //myGamePiece2 = new component(15, 50, "blue", 140, 120)
+            myGamePiece2 = new component(15, 50, "blue", 140, 120);
         }
         
         var myGameArea = {
@@ -58,12 +59,11 @@ var myGamePiece;
             //hvis den kanppen som er trykket er en av dusse to so vil den gå opp eller ned
             if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1; }
             if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1; }
+            if (myGameArea.key && myGameArea.key == 65) {myGamePiece.speedY = -1; }
+            if (myGameArea.key && myGameArea.key == 99) {myGamePiece.speedY = 1; }
             //så vil den oppdatere posisjonen
             myGamePiece.newPos();    
             myGamePiece.update();
         
         }
-        /*if (myGamePiece.x >= 270){
-            console.log('hit')
-        }*/
         
