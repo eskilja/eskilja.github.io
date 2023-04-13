@@ -10,15 +10,14 @@
         </div>
 
         <div>
-            <a href='nettsiden.html'><img src='wromwrom.png' id='image'></a>
-            <a href='nettsiden.html' id='link'>cargame</a>
+            <a href='flappy.html'><img src='flappybird.png' id='image'></a>
+            <a href='flappy.html' id='link'>flappybird</a>
         </div>
 
         <div>
-            <a href='pong.html'><img scr="" id="image"> </a>
-            <a href='pong.html' id='link'>pong</a>
+            <a href='black.html'><img src='blackj.png' id='image'></a>
+            <a href='black.html' id='link'>blackjack</a>
         </div>
-
         
     </div>
 </head>
@@ -28,7 +27,7 @@
     <title>snake</title>
 </head>
 <!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
-<body onload="startGame()">
+<body onload="startGame()" class="background">
 
 <!--kobler snake.js og snake.html sammen-->
 <script src="snake.js"></script>
@@ -38,6 +37,7 @@
 <!--her er restart knappen og hvis den blir trykket så kaller den funksjonen restart-->
 <button type="button" onclick="restart()">restart</button>
 
+
 <style>
 /*<body onload = 'tegn()'>    blueviolet*/
 /*definerer hvordan masse ting skal se ut 
@@ -45,6 +45,12 @@
 canvas {
 border:1px solid #d3d3d3;
 background-color: #f1f1f1;
+}
+
+
+.background{
+    background-color: #074f57;
+    color:white;
 }
 
 #links {
@@ -58,6 +64,11 @@ background-color: #f1f1f1;
     margin-top:16px;
     padding-bottom:16px;
     font-weight:normal;
+}
+
+.gameback{
+    background-image: url("snake_back.png"); 
+    background-size: 400 400;   
 }
 
 #link:hover {

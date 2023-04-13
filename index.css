@@ -78,14 +78,17 @@ body{
   @keyframes animate{
     0%{
         transform: translateY(0);
+        /*den starter som helt synelig*/
         opacity: 1;
     }
     80%{
+      /*nå er den litt mindre synelig */
         opacity: 0.7;
     }
     100%{
-      /*når hele animationen har blitt fulført så skal den ha rotert 360deg*/
+      /*når hele animationen har blitt fulført så skal den ha rotert 360deg og den skal ha flyttet seg 800 px*/
         transform: translateY(800px) rotate(360deg);
+        /*ikke synelig i det hele tatt*/
         opacity: 0;
     }
   }

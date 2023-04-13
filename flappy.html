@@ -10,13 +10,13 @@
         </div>
 
         <div>
-            <a href='nettsiden.html'><img src='wromwrom.png' id='image'></a>
-            <a href='nettsiden.html' id='link'>cargame</a>
+            <a href='snake.html'><img src='snak.png' id='image'></a>
+            <a href='snake.html' id='link'>Snake</a>
         </div>
 
         <div>
-            <a href='snake.html'><img src='snak.png' id='image'></a>
-            <a href='snak.html' id='link'>testing do not</a>
+            <a href='black.html'><img src='blackj.png' id='image'></a>
+            <a href='black.html' id='link'>blackjack</a>
         </div>
 
         
@@ -28,12 +28,9 @@
     <title>flappybird</title>
 </head>
 
-<head>
-    <style>
-    </style>
-</head>
+
 <!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
-<body onload="startGame()">
+<body onload="startGame()" class="bakgrunn">
 
 <!--kobler flappy.js og flappy.html sammen-->
 <script src="flappy.js"></script>
@@ -66,7 +63,10 @@
     padding-bottom:16px;
     font-weight:normal;
 }
-
+.bakgrunn{
+    background-color: #34568B;
+    color:white;
+}
 #link:hover {
     text-decoration:underline;
 }

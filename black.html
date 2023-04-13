@@ -3,6 +3,7 @@
 <body onload="startGame()">
 <head>
 <script>
+// først så lager vi en masse variabler 
 var PlayerScore = 0;
 var DealerScore = 0;
 var Winner = "Nobody";
@@ -10,27 +11,33 @@ var AskAgain = true;
 
 function random(maxValue)
 {
+    //så ganger vi et tilfeldig tall med maxValue og plusser på en 
  return Math.floor(Math.random() * maxValue) + 1;
 }
-
+//lager en funksjon som heter pickSuit
 function pickSuit()
 {
+    //lager et tilfeldig tall mellom 1 og 4 
  suit = random(4);
 
  if(suit == 1)
+ //hvis det er en så skal programe si at de er Spades
  return "Spades";
 
  if(suit == 2)
+ //hvis det er to så skal den si at det er Clubs
  return "Clubs";
 
  if(suit == 3)
+ //hvis det er tre så skal den si at det er Diamonds
  return "Diamonds";
-
- return "Hearts";
+ //hvis det ikke er noen av de over så skal den si at det er hearts
+  return "Hearts";
 }
 
 function cardName(card)
 {
+// sier at hvis Card har en berdi av noen av de under så ska den si det
  if(card == 1)
  return "Ace";
 
@@ -42,7 +49,7 @@ function cardName(card)
 
  if(card == 13)
  return "King";
-
+//hvis ikke så skal den si nummeret til kortet og card
  return ("" + card);
 }
 

@@ -15,47 +15,42 @@
         </div>
 
         <div>
-            <a href='snake.html'><img src='snak.png' id='image'></a>
-            <a href='snak.html' id='link'>testing do not</a>
+            <a href='snake.html'><img src='snake.png' id='image'></a>
+            <a href='snake.html' id='link'>Snake</a>
         </div>
 
-        
+        <div>
+            <a href='flappy.html'><img src='flappybird.png' id='image'></a>
+            <a href='flappy.html' id='link'>Flappy bird</a>
+        </div>
+
     </div>
 </head>
 
 
 <head>
-    <title>pong</title>
+    <title>Tetris</title>
 </head>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <style>
-    canvas {
-        border:1px solid #d3d3d3;
-        background-color: black;
-    }
     </style>
 </head>
 <!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
 <body onload="startGame()">
 
-<!--kobler pong.js og pong.html sammen-->
-<script src="pong.js"></script>
+<!--kobler flappy.js og flappy.html sammen-->
+<script src="tetris.js"></script>
 
 
 </body>
-
+<!--her er restart knappen og hvis den blir trykket så kaller den funksjonen restart-->
+<button type="button" onclick="restart()">restart</button>
 
 <style>
 /*<body onload = 'tegn()'>    blueviolet*/
 /*definerer hvordan masse ting skal se ut 
   f.eks hvor store de skal være hvilken farge de skal ha osv.*/
-canvas {
-border:1px solid #d3d3d3;
-background-color: #f1f1f1;
-}
-
 #links {
     background-color:whitesmoke;
     color:midnightblue;
