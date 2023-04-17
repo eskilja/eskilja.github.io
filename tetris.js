@@ -29,11 +29,11 @@ class Piece {
             if (rotation == 0) {
                 coords.push({x: x + brick.x, y: y + brick.y})
             } else if (rotation == 1){
-                coords.push({x: x + brick.y, y: y + brick.x})
+                coords.push({x: x + brick.y, y: y - brick.x})
             } else if (rotation == 2) {
                 coords.push({x: x - brick.x, y: y - brick.y})
             } else if (rotation == 3){
-                coords.push({x: x - brick.y, y: y - brick.x})
+                coords.push({x: x - brick.y, y: y + brick.x})
             }   
         }  
         return coords
@@ -84,6 +84,24 @@ class Piece {
         this.y = this.y-1
         return true;
     }
+    moveright(){
+        if (this.crashes(this.x+1, this.y, this.rotation) ) {
+            return false;
+        }
+        this.x = this.x +1
+    }
+    moveleft(){
+        if (this.crashes(this.x-1, this.y, this.rotation) ) {
+            return false;
+        }
+        this.x = this.x-1
+    }
+    changedirec(){
+        if (this.crashes(this.x, this.y, this.rotation+1) ) {
+            return false;
+        }
+        this.rotation = (this.rotation +1) % 4 
+    }
 }
 
 var myGameArea = {
@@ -125,22 +143,21 @@ var myGameArea = {
             console.log("Knapp trykket")
             switch(e.key){
                 case 'ArrowLeft':
-                    myGameArea.direction = {x:-1, y:0};
+                    myGameArea.piece.moveleft()
                     console.log('venstre');
                     break;
                 case 'ArrowUp':
-                    myGameArea.direction = {x:0, y:-1};
+                    myGameArea.piece.changedirec()
                     console.log('opp');
                     break;
                 case 'ArrowRight':
-                    myGameArea.direction = {x:1, y:0};
+                    myGameArea.piece.moveright()
                     console.log('höyre');
                     break;
                 case 'ArrowDown':
-                    myGameArea.direction = {x:0, y:1};
+                    myGameArea.piece.movedown()
                     console.log('ned');
-                    break;
-                              
+                    break;                
             }
             
         })
