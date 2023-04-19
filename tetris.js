@@ -13,9 +13,49 @@ class Piece {
         this.y = y
         this.rotation = 0 
         //vi lager en liste og gir den en masse tal som vi skal bruke til å lage figurene
-        //den store L en må være rød
-        this.bricks = [{x:-1, y:0}, {x:-1, y:1}, {x:0, y:0}, {x:1, y:0}]
-        this.color = 1
+        var brick = Math.floor((Math.random() *7)+1);
+        if (brick == 1){
+            // speilvendt L
+            this.bricks = [{x:-1, y:0}, {x:-1, y:1}, {x:0, y:0}, {x:1, y:0}]
+            this.color = 1
+        }
+        else if (brick == 2){
+            // strek
+            this.bricks = [{x:0, y:-2}, {x:0, y:-1}, {x:0, y:0}, {x:0, y:1}]
+            this.color = 5
+        }
+        else if (brick == 3){
+            // pluss symbol minus den nederste boksen  
+            this.bricks = [{x:-1, y:0}, {x:-1, y:1}, {x:0, y:0}, {x:1, y:0}]
+            this.color = 7
+        }
+        else if (brick == 4){
+            // andre L
+            this.bricks = [{x:-1, y:0}, {x:+1, y:1}, {x:0, y:0}, {x:1, y:0}]
+            this.color = 4
+        }
+        else if (brick == 5){
+            // z
+            this.bricks = [{x:-1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:1, y:1}]
+            this.color = 3
+        }
+        else if (brick == 6){
+            // speilvent z
+            this.bricks = [{x:1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:-1, y:1}]
+            this.color = 2
+        }
+        else if (brick == 7){
+            // boksen
+            this.bricks = [{x:-1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:-1, y:1}]
+            this.color = 6
+        }
+        // streken [{x:0, y:-2}, {x:0, y:-1}, {x:0, y:0}, {x:0, y:1}] funker 
+        // pluss symbol minus den nederste boksen  [{x:-1, y:0}, {x:0, y:0}, {x:1, y:0}, {x:0, y:1}] funker
+        // speilvendt L [{x:-1, y:0}, {x:-1, y:1}, {x:0, y:0}, {x:1, y:0}] funker
+        // andre L  [{x:-1, y:0}, {x:+1, y:1}, {x:0, y:0}, {x:1, y:0}] funker
+        // z [{x:-1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:1, y:1}] funker
+        // speilvent z [{x:1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:-1, y:1}] funker
+        // boksen [{x:-1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:-1, y:1}] funker 
     }
     //vi lager en funksjon som heter get_coordinats og gir den x, y, og rotasjonen
     get_coordinates(x, y, rotation) {
