@@ -155,19 +155,11 @@ var myGameArea = {
         this.canvas.width = this.boardsizex * this.squaresize;
         this.canvas.height = this.boardsizey * this.squaresize;
 
-        let board = [];
+        //lager et tomt brett
+        this.board = [];
+        this.boardcleanup()
 
         this.colors = ["gray", "red", "blue", "green", "pink", "cyan", "yellow", "purple"];
-
-        // lager et tomt brett
-        for (let i = 0; i < this.boardsizey; i++) {
-            board[i] = [];
-            for (let j = 0; j < this.boardsizex; j++) {
-                board[i][j] = 0;
-            }
-        }
-        //lagrer brettet 
-        this.board = board
 
         this.piece = new Piece(5, 19)
     
@@ -230,6 +222,24 @@ var myGameArea = {
         for (let i = 0; i < coords.length; i++){
             this.drawsquare(coords[i].x, coords[i].y, this.piece.color)
         }
+    }, 
+    boardcleanup : function(){
+        let i = 0;
+        while (i < this.board.length){
+            var mincolor = Math.min(...this.board[i])
+            if (mincolor > 0){
+                this.board.splice(i, 1)
+            }else {
+                i = i + 1
+            }            
+        }
+        while (this.board.length < this.boardsizey) {
+            i = this.board.length
+            this.board[i] = [];
+            for (let j = 0; j < this.boardsizex; j++) {
+                this.board[i][j] = 0;
+            }
+        }
     }
 }
 
@@ -248,12 +258,6 @@ clearInterval(myGameArea.interval);
 myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
 }
 
-function restart(){
-    myGameArea.interval_ms = 500
-    changeTimer();
-    console.log('restart eller død')
-}
-
 function updateGameArea() {
     myGameArea.clear(); 
     
@@ -270,4 +274,6 @@ function updateGameArea() {
     }
     myGameArea.drawboard()
     myGameArea.drawpiece()
+    //rydde etter her
+    myGameArea.boardcleanup()
 }
