@@ -183,6 +183,9 @@ var myGameArea = {
                     break;
                 case 'ArrowUp':
                     myGameArea.piece.changedirec()
+                    myGameArea.clear();
+                    myGameArea.drawboard()
+                    myGameArea.drawpiece()
                     console.log('opp');
                     break;
                 case 'ArrowRight':
