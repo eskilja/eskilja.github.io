@@ -176,6 +176,9 @@ var myGameArea = {
             switch(e.key){
                 case 'ArrowLeft':
                     myGameArea.piece.moveleft()
+                    myGameArea.clear();
+                    myGameArea.drawboard()
+                    myGameArea.drawpiece()
                     console.log('venstre');
                     break;
                 case 'ArrowUp':
@@ -184,10 +187,16 @@ var myGameArea = {
                     break;
                 case 'ArrowRight':
                     myGameArea.piece.moveright()
+                    myGameArea.clear();
+                    myGameArea.drawboard()
+                    myGameArea.drawpiece()
                     console.log('höyre');
                     break;
                 case 'ArrowDown':
                     myGameArea.piece.movedown()
+                    myGameArea.clear();
+                    myGameArea.drawboard()
+                    myGameArea.drawpiece()
                     console.log('ned');
                     break;                
             }
@@ -242,6 +251,7 @@ var myGameArea = {
         }
     }
 }
+
 
 //sier at hvis funksjonen change timer blir kalt så skal den sjekke om interval_ms er større en 25 
 //er det dette så vil den ikke endre hvor raskt spillet oppdateres ellers så vil det oppdateres 25 ms raskere
