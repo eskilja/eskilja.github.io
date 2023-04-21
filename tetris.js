@@ -12,8 +12,10 @@ class Piece {
         this.x = x
         this.y = y
         this.rotation = 0 
-        //vi lager en liste og gir den en masse tal som vi skal bruke til å lage figurene
+        //her skal vi finne ut hvilken brikke vi skal plasere på brettet
+        //først lager vi at tilfeldig tall mellom 1 og 7
         var brick = Math.floor((Math.random() *7)+1);
+        //så sjekker vi hvilke tall vi har fått så tegner vi brikken som er det samme som det talet og setter fargen den skal ha 
         if (brick == 1){
             // speilvendt L
             this.bricks = [{x:-1, y:0}, {x:-1, y:1}, {x:0, y:0}, {x:1, y:0}]
@@ -78,6 +80,7 @@ class Piece {
         }  
         return coords
     }
+    //lager en funksjon som skal plasere på brettet  
     place_on_board(){
         var coords = this.get_coordinates(this.x, this.y, this.rotation)
         for (var i = 0; i <coords.length; i++) {
@@ -124,6 +127,7 @@ class Piece {
         this.y = this.y-1
         return true;
     }
+    //her lager vi funksjonene som vi skal kalle når de forsjellige piltastene er blitt trykket
     moveright(){
         if (this.crashes(this.x+1, this.y, this.rotation) ) {
             return false;
@@ -159,8 +163,10 @@ var myGameArea = {
         this.board = [];
         this.boardcleanup()
 
+        //lager en liste som sier hva de forsjellige fargene er 
         this.colors = ["gray", "red", "blue", "green", "pink", "cyan", "yellow", "purple"];
 
+        //sier hvor brikken skal komme 
         this.piece = new Piece(5, 19)
     
         this.context = this.canvas.getContext("2d");
@@ -174,6 +180,8 @@ var myGameArea = {
         window.addEventListener('keydown', function (e) {
             console.log("Knapp trykket")
             switch(e.key){
+                //her sjekker vi om vi ser at noen av disse knappene er blitt trykket og hvis de har blitt trykket så skal vi 
+                //kalle en funksjon som sier hva de skal gjøre og derreter oppdatere brettet
                 case 'ArrowLeft':
                     myGameArea.piece.moveleft()
                     myGameArea.clear();
@@ -212,16 +220,20 @@ var myGameArea = {
     },
 
     drawsquare : function(x, y, color) {
-        //funksjon som hvis vi kaller den så vkan vi definere fhvordan en block skal se ut
+        //enkelt forklart så er dette en funksjon som hvis vi kaller den så vkan vi definere hvordan en block skal se ut
         this.context.fillStyle = this.colors[color];
         let new_y = this.boardsizey-1-y
         this.context.fillRect(x*this.squaresize, new_y*this.squaresize, this.squaresize-2, this.squaresize-2);
     },
-
+    // vi lager en funksjon som akl tegne brettet
     drawboard : function(){
+        //først så har vi en for løkke som vil gå gjennom alle boardsizey 
         for (let i = 0; i < this.boardsizey; i++) {
+            //så lager vi en for løkke som vil gå gjennom alle boardsizex
             for (let j = 0; j < this.boardsizex; j++) {
+                // så sier vi at color er board[i][j]
                 color = this.board[i][j]
+                //hvis color er større en null så skal vi tenge kalle en funkson som skal tegne denne brikken
                 if (color > 0){
                     this.drawsquare(j,i,color)
                 }
@@ -229,25 +241,39 @@ var myGameArea = {
         }
     },
 
+    //vi skal lage en ny funksjon som skal tegne brikken
     drawpiece : function(){
+        // vi sier at en ny variabel som heter coords er funksjonen som heter get_coordinates 
         var coords = this.piece.get_coordinates(this.piece.x, this.piece.y, this.piece.rotation)
+        //så lager vi en for løkke som går gjennom alle coords og tegner dem 
         for (let i = 0; i < coords.length; i++){
             this.drawsquare(coords[i].x, coords[i].y, this.piece.color)
         }
     }, 
+    //vi lager en funksjon som vi skal bruke til å slette hele linjer 
     boardcleanup : function(){
+        //først så lager vi en variabel som heter i og sier at den er 0
         let i = 0;
+        //så lager vi en while løkke som sier at så lenge i er mindre en this.board.length så skal den kjøre
         while (i < this.board.length){
+            // så sjekker vi hva det minste tallet på en linje er
             var mincolor = Math.min(...this.board[i])
+            //hvis mincolor er større en null så vet vi at vi har en full linje og så sletter vi den
             if (mincolor > 0){
                 this.board.splice(i, 1)
+                //hvis ikke så gjør vi i en større sånn at den vil sjekke den nye linje i 
             }else {
                 i = i + 1
             }            
         }
+        //så lager vi en ny while løkke som skal lage nye linjer fordi vi nettop slettet noen
+        //så lenge this.board.length er mindre en this.boardsizey så vil den kjøre
         while (this.board.length < this.boardsizey) {
+            //vi sier at i er lik this.board.length 
             i = this.board.length
+            //vi sier at this.board[i] er en tom liste
             this.board[i] = [];
+            //så lager vi en for løkke som vil lage x sidene også
             for (let j = 0; j < this.boardsizex; j++) {
                 this.board[i][j] = 0;
             }
@@ -285,8 +311,8 @@ function updateGameArea() {
         //lager en ny brikke
         myGameArea.piece = new Piece(5, 19)
     }
+    //her tegner vi brettet på nytt og vi sjekker om det er noen linjer som vi skal slette
     myGameArea.drawboard()
     myGameArea.drawpiece()
-    //rydde etter her
     myGameArea.boardcleanup()
 }
