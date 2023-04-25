@@ -28,7 +28,7 @@ class Piece {
         }
         else if (brick == 3){
             // pluss symbol minus den nederste boksen  
-            this.bricks = [{x:-1, y:0}, {x:-1, y:1}, {x:0, y:0}, {x:1, y:0}]
+            this.bricks = [{x:-1, y:0}, {x:0, y:1}, {x:0, y:0}, {x:1, y:0}]
             this.color = 7
         }
         else if (brick == 4){
@@ -159,15 +159,10 @@ var myGameArea = {
         this.canvas.width = this.boardsizex * this.squaresize;
         this.canvas.height = this.boardsizey * this.squaresize;
 
-        //lager et tomt brett
-        this.board = [];
-        this.boardcleanup()
+        this.initgame();
 
         //lager en liste som sier hva de forsjellige fargene er 
         this.colors = ["gray", "red", "blue", "green", "pink", "cyan", "yellow", "purple"];
-
-        //sier hvor brikken skal komme 
-        this.piece = new Piece(5, 19)
     
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
@@ -178,6 +173,9 @@ var myGameArea = {
         //sier at hvis den registrerer en knapp trykket så vil den sjekke hvilken knapp det er
         //så hvis det er en av piltastene så vil den endre retningen som slangen beveger seg i 
         window.addEventListener('keydown', function (e) {
+            if( myGameArea.gameover){
+                return
+            }
             console.log("Knapp trykket")
             switch(e.key){
                 //her sjekker vi om vi ser at noen av disse knappene er blitt trykket og hvis de har blitt trykket så skal vi 
@@ -225,7 +223,7 @@ var myGameArea = {
         let new_y = this.boardsizey-1-y
         this.context.fillRect(x*this.squaresize, new_y*this.squaresize, this.squaresize-2, this.squaresize-2);
     },
-    // vi lager en funksjon som akl tegne brettet
+    // vi lager en funksjon som kommer til å tegne brettet
     drawboard : function(){
         //først så har vi en for løkke som vil gå gjennom alle boardsizey 
         for (let i = 0; i < this.boardsizey; i++) {
@@ -264,7 +262,7 @@ var myGameArea = {
                 //hvis ikke så gjør vi i en større sånn at den vil sjekke den nye linje i 
             }else {
                 i = i + 1
-            }            
+            }    
         }
         //så lager vi en ny while løkke som skal lage nye linjer fordi vi nettop slettet noen
         //så lenge this.board.length er mindre en this.boardsizey så vil den kjøre
@@ -278,6 +276,17 @@ var myGameArea = {
                 this.board[i][j] = 0;
             }
         }
+    },
+    initgame : function(){
+        //lager et tomt brett 
+        this.board = [];
+        this.boardcleanup()
+
+        //sier hvor brikken skal komme 
+        this.piece = new Piece(5, 19)
+
+        //lager en variabel som heter gameover og setter den til false
+        this.gameover = false;
     }
 }
 
@@ -297,22 +306,44 @@ clearInterval(myGameArea.interval);
 myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
 }
 
-function updateGameArea() {
-    myGameArea.clear(); 
-    
-    //gjør sånn at brikken beveger seg hvert 1/2 sekund helt til du treffer bunnen eller en annen brikke
-    if(myGameArea.piece.movedown()){
-        //vi beveger oss ned med 1
-        ; 
-    } else {
-        //vi stopper brikken og lagrer hvor den var i board
-        myGameArea.piece.place_on_board();
+function restart(){
+    myGameArea.initgame();
 
-        //lager en ny brikke
-        myGameArea.piece = new Piece(5, 19)
+}
+
+function updateGameArea() {
+
+    if( myGameArea.gameover){
+        myGameArea.clear();
+        myGameArea.drawboard();
+    } else {
+        myGameArea.clear(); 
+        //gjør sånn at brikken beveger seg hvert 1/2 sekund helt til du treffer bunnen eller en annen brikke
+        if(myGameArea.piece.movedown()){
+            //vi beveger oss ned med 1
+            ; 
+        } else {
+            //vi stopper brikken og lagrer hvor den var i board
+            myGameArea.piece.place_on_board();
+
+            //lager en ny brikke
+            myGameArea.piece = new Piece(5, 19)
+            
+            if (myGameArea.piece.crashes(myGameArea.piece.x, myGameArea.piece.y, myGameArea.piece.rotation)){
+                myGameArea.gameover = true  
+                
+            }
+            
+        }
+        //her tegner vi brettet på nytt og vi sjekker om det er noen linjer som vi skal slette
+        myGameArea.drawboard()
+        if( myGameArea.gameover == false){
+            myGameArea.drawpiece()
+        }
+        myGameArea.boardcleanup()
+        
+        
     }
-    //her tegner vi brettet på nytt og vi sjekker om det er noen linjer som vi skal slette
-    myGameArea.drawboard()
-    myGameArea.drawpiece()
-    myGameArea.boardcleanup()
+    
+    
 }
