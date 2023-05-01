@@ -139,7 +139,7 @@ class Piece {
         this.x = this.x-1
     }
     changedirec(){
-        if (this.crashes(this.x, this.y, this.rotation+1) ) {
+        if (this.crashes(this.x, this.y, (this.rotation+1)%4) ) {
             return false;
         }
         this.rotation = (this.rotation +1) % 4 
@@ -154,11 +154,11 @@ var myGameArea = {
         this.boardsizex = 10;
         this.boardsizey = 20;
         this.squaresize = 20;
-        this.canvas.width = this.boardsizex * this.squaresize;
+        this.scorewidth =100;
+        this.scorex = this.boardsizex * this.squaresize
+        this.canvas.width = this.scorex + this.scorewidth;
         this.canvas.height = this.boardsizey * this.squaresize;
         this.initgame();
-
-        this.score = 0;
 
         //lager en liste som sier hva de forsjellige fargene er 
         this.colors = ["gray", "red", "blue", "green", "pink", "cyan", "yellow", "purple"];
@@ -217,7 +217,7 @@ var myGameArea = {
     },
 
     drawsquare : function(x, y, color) {
-        //enkelt forklart så er dette en funksjon som hvis vi kaller den så vkan vi definere hvordan en block skal se ut
+        //enkelt forklart så er dette en funksjon som hvis vi kaller den så vi kan vi definere hvordan en block skal se ut
         this.context.fillStyle = this.colors[color];
         let new_y = this.boardsizey-1-y
         this.context.fillRect(x*this.squaresize, new_y*this.squaresize, this.squaresize-2, this.squaresize-2);
@@ -236,6 +236,12 @@ var myGameArea = {
                 }
             }
         }
+        this.context.fillStyle = "midnightblue";
+        this.context.fillRect(this.scorex, 0, this.scorewidth, this.canvas.height);
+        this.context.fillStyle = "white";
+        this.context.font = "15px Arial";
+        this.context.fillText("Score",this.scorex+10,50);
+        this.context.fillText(this.score, this.scorex+15,70)
     },
 
     //vi skal lage en ny funksjon som skal tegne brikken
@@ -288,6 +294,8 @@ var myGameArea = {
 
         //lager en variabel som heter gameover og setter den til false
         this.gameover = false;
+
+        this.score = 0;
     }
 }
 
@@ -309,9 +317,6 @@ myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
 
 function restart(){
     myGameArea.initgame();
-    myGameArea.score = 0
-    document.getElementById("score").value = this.score;
-
 }
 
 
