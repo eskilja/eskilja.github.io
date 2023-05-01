@@ -86,7 +86,7 @@ class Piece {
         for (var i = 0; i <coords.length; i++) {
             var coord = coords[i];
 
-            myGameArea.board[coord.y][coord.x] = this.color
+            myGameArea.board[coord.y][coord.x] = this.color;
         }
     }
     //denne funksjonen skal sjekke om denne brikken kommer til å treffe en annen brikke
@@ -108,11 +108,9 @@ class Piece {
             if (coord.y < 0){
                 return true; 
             }
-            if (coord.y < myGameArea.boardsizey){
-                //hvis den brikken som vi nå kontrolerer treffer en annen brikke så skal vi returnere true
-                if (myGameArea.board[coord.y][coord.x] > 0 ) {
-                    return true;
-                }
+            //sjekker om brikken kræsjer med en annen brikke
+            if (myGameArea.board[coord.y][coord.x] > 0 ) {
+                return true;
             }
         }
         //brikken sin plass er ledig
@@ -158,8 +156,9 @@ var myGameArea = {
         this.squaresize = 20;
         this.canvas.width = this.boardsizex * this.squaresize;
         this.canvas.height = this.boardsizey * this.squaresize;
-
         this.initgame();
+
+        this.score = 0;
 
         //lager en liste som sier hva de forsjellige fargene er 
         this.colors = ["gray", "red", "blue", "green", "pink", "cyan", "yellow", "purple"];
@@ -260,13 +259,15 @@ var myGameArea = {
             if (mincolor > 0){
                 this.board.splice(i, 1)
                 //hvis ikke så gjør vi i en større sånn at den vil sjekke den nye linje i 
+                this.score = this.score + 100
+                document.getElementById("score").value = this.score;
             }else {
                 i = i + 1
             }    
         }
         //så lager vi en ny while løkke som skal lage nye linjer fordi vi nettop slettet noen
         //så lenge this.board.length er mindre en this.boardsizey så vil den kjøre
-        while (this.board.length < this.boardsizey) {
+        while (this.board.length < this.boardsizey + 4) {
             //vi sier at i er lik this.board.length 
             i = this.board.length
             //vi sier at this.board[i] er en tom liste
@@ -308,8 +309,11 @@ myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
 
 function restart(){
     myGameArea.initgame();
+    myGameArea.score = 0
+    document.getElementById("score").value = this.score;
 
 }
+
 
 function updateGameArea() {
 

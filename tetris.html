@@ -38,11 +38,14 @@
     </style>
 </head>
 <!-- sier at med en gang siden blir loadet så vil den kalle funksjonen startgame()-->
-<body onload="startGame()">
+<body onload="startGame()" class="background">
 
 <!--kobler tetris.js og tetris.html sammen-->
 <script src="tetris.js"></script>
-
+<div class="scoreboard">
+    <div id= "score">Score</div> 
+    <div class= "scoreboard__score" value="0" id="score"></div>
+</div>
 
 </body>
 <!--her er restart knappen og hvis den blir trykket så kaller den funksjonen restart-->
@@ -52,6 +55,29 @@
 /*<body onload = 'tegn()'>    blueviolet*/
 /*definerer hvordan masse ting skal se ut 
   f.eks hvor store de skal være hvilken farge de skal ha osv.*/
+.scoreboard{
+    display: grid;
+    grid-template-columns: 1fr;
+    font-family: "quicksand", sans-serif;
+    border: none;
+    float:right;
+    margin-right:800px;
+    top:76px;
+}
+.score,
+.scoreboard__score{
+    padding: 10px;
+}
+
+.score{
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+canvas {
+border:1px solid #d3d3d3;
+background-color: #f1f1f1;
+}
 #links {
     background-color:whitesmoke;
     color:midnightblue;
@@ -67,6 +93,11 @@
 
 #link:hover {
     text-decoration:underline;
+}
+
+.background{
+    background-color: #0049B7;
+    color:white;
 }
 
 #image {
@@ -93,7 +124,7 @@
     text-align: left;
     outline: none;
     font-size: 18px;
-  
+    
     float:right;
     margin-right:50px;
     top:76px;
