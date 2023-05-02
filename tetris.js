@@ -154,7 +154,7 @@ var myGameArea = {
         this.boardsizex = 10;
         this.boardsizey = 20;
         this.squaresize = 20;
-        this.scorewidth =100;
+        this.scorewidth = 100;
         this.scorex = this.boardsizex * this.squaresize
         this.canvas.width = this.scorex + this.scorewidth;
         this.canvas.height = this.boardsizey * this.squaresize;
@@ -266,7 +266,10 @@ var myGameArea = {
                 this.board.splice(i, 1)
                 //hvis ikke så gjør vi i en større sånn at den vil sjekke den nye linje i 
                 this.score = this.score + 100
-                document.getElementById("score").value = this.score;
+                if (this.interval_ms > 0){
+                    this.interval_ms = this.interval_ms - 10;
+                    changeTimer();
+                }
             }else {
                 i = i + 1
             }    
@@ -303,11 +306,11 @@ var myGameArea = {
 //sier at hvis funksjonen change timer blir kalt så skal den sjekke om interval_ms er større en 25 
 //er det dette så vil den ikke endre hvor raskt spillet oppdateres ellers så vil det oppdateres 25 ms raskere
 function speedup(){
-
 if (myGameArea.interval_ms > 0){
-    myGameArea.interval_ms = myGameArea.interval_ms - 25;
+    myGameArea.interval_ms = myGameArea.interval_ms - 100;
 }
 }
+
 //lager en funksjon som vill cleare set interval og kaller change timer for å endre timeren 
 //så lager en ny timer som oppdateres litt raskere
 function changeTimer (){
@@ -317,6 +320,8 @@ myGameArea.interval = setInterval(updateGameArea, myGameArea.interval_ms);
 
 function restart(){
     myGameArea.initgame();
+    myGameArea.interval_ms = 500
+    changeTimer();
 }
 
 
