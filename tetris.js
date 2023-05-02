@@ -155,6 +155,8 @@ var myGameArea = {
         this.boardsizey = 20;
         this.squaresize = 20;
         this.scorewidth = 100;
+        this.next_piecex = this.boardsizex + 2;
+        this.next_piecey = 4
         this.scorex = this.boardsizex * this.squaresize
         this.canvas.width = this.scorex + this.scorewidth;
         this.canvas.height = this.boardsizey * this.squaresize;
@@ -180,31 +182,31 @@ var myGameArea = {
                 //her sjekker vi om vi ser at noen av disse knappene er blitt trykket og hvis de har blitt trykket så skal vi 
                 //kalle en funksjon som sier hva de skal gjøre og derreter oppdatere brettet
                 case 'ArrowLeft':
-                    myGameArea.piece.moveleft()
+                    myGameArea.piece.moveleft();
                     myGameArea.clear();
-                    myGameArea.drawboard()
-                    myGameArea.drawpiece()
+                    myGameArea.drawboard();
+                    myGameArea.drawpiece(myGameArea.piece);
                     console.log('venstre');
                     break;
                 case 'ArrowUp':
-                    myGameArea.piece.changedirec()
+                    myGameArea.piece.changedirec();
                     myGameArea.clear();
-                    myGameArea.drawboard()
-                    myGameArea.drawpiece()
+                    myGameArea.drawboard();
+                    myGameArea.drawpiece(myGameArea.piece);
                     console.log('opp');
                     break;
                 case 'ArrowRight':
-                    myGameArea.piece.moveright()
+                    myGameArea.piece.moveright();
                     myGameArea.clear();
-                    myGameArea.drawboard()
-                    myGameArea.drawpiece()
+                    myGameArea.drawboard();
+                    myGameArea.drawpiece(myGameArea.piece);
                     console.log('höyre');
                     break;
                 case 'ArrowDown':
-                    myGameArea.piece.movedown()
+                    myGameArea.piece.movedown();
                     myGameArea.clear();
-                    myGameArea.drawboard()
-                    myGameArea.drawpiece()
+                    myGameArea.drawboard();
+                    myGameArea.drawpiece(myGameArea.piece);
                     console.log('ned');
                     break;                
             }
@@ -242,15 +244,17 @@ var myGameArea = {
         this.context.font = "15px Arial";
         this.context.fillText("Score",this.scorex+10,50);
         this.context.fillText(this.score, this.scorex+15,70)
+        this.context.fillText("Next Piece",this.scorex+15, 270);
+        this.drawpiece(this.next_piece)
     },
 
     //vi skal lage en ny funksjon som skal tegne brikken
-    drawpiece : function(){
+    drawpiece : function(piece){
         // vi sier at en ny variabel som heter coords er funksjonen som heter get_coordinates 
-        var coords = this.piece.get_coordinates(this.piece.x, this.piece.y, this.piece.rotation)
+        var coords = piece.get_coordinates(piece.x, piece.y, piece.rotation)
         //så lager vi en for løkke som går gjennom alle coords og tegner dem 
         for (let i = 0; i < coords.length; i++){
-            this.drawsquare(coords[i].x, coords[i].y, this.piece.color)
+            this.drawsquare(coords[i].x, coords[i].y, piece.color)
         }
     }, 
     //vi lager en funksjon som vi skal bruke til å slette hele linjer 
@@ -294,6 +298,9 @@ var myGameArea = {
 
         //sier hvor brikken skal komme 
         this.piece = new Piece(5, 19)
+
+        //
+        this.next_piece = new Piece(this.next_piecex, this.next_piecey)
 
         //lager en variabel som heter gameover og setter den til false
         this.gameover = false;
@@ -340,8 +347,13 @@ function updateGameArea() {
             //vi stopper brikken og lagrer hvor den var i board
             myGameArea.piece.place_on_board();
 
+            
+
             //lager en ny brikke
-            myGameArea.piece = new Piece(5, 19)
+            myGameArea.piece = myGameArea.next_piece;
+            myGameArea.piece.x = 5;
+            myGameArea.piece.y = 19;
+            myGameArea.next_piece = new Piece(myGameArea.next_piecex, myGameArea.next_piecey);
             
             if (myGameArea.piece.crashes(myGameArea.piece.x, myGameArea.piece.y, myGameArea.piece.rotation)){
                 myGameArea.gameover = true  
@@ -352,7 +364,7 @@ function updateGameArea() {
         //her tegner vi brettet på nytt og vi sjekker om det er noen linjer som vi skal slette
         myGameArea.drawboard()
         if( myGameArea.gameover == false){
-            myGameArea.drawpiece()
+            myGameArea.drawpiece(myGameArea.piece)
         }
         myGameArea.boardcleanup()
         
