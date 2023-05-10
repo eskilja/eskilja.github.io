@@ -122,20 +122,26 @@ class Piece {
     //her lager vi funksjonene som vi skal kalle når de forsjellige piltastene er blitt trykket
     moveright(){
         if (this.crashes(this.x+1, this.y, this.rotation) ) {
+            //hvis this.crashes returnerer sant så skal vi ikke gå en til høyre
             return false;
         }
+        //ellers så går vi en til høyre
         this.x = this.x +1
     }
     moveleft(){
         if (this.crashes(this.x-1, this.y, this.rotation) ) {
+            //hvis this.crashes returnerer sant så skal vi ikke gå en til venstre
             return false;
         }
+        //ellers så går vi en til venstre
         this.x = this.x-1
     }
     changedirec(){
         if (this.crashes(this.x, this.y, (this.rotation+1)%4) ) {
+            //hvis this.crashes returnerer sant så skal vi ikke endre rotasjonen
             return false;
         }
+        //ellers så endrer vi rotasjonen
         this.rotation = (this.rotation +1) % 4 
     }
 }

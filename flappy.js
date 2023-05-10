@@ -52,11 +52,13 @@ var myBackground;
         }
         //lager en funksjon som heter component
         function component(width, height, color, x, y, type) {
+            //sjekker hvilken type den nye componenten den er
             if (type == "image" || type == "background") {
+                //hvis den er et bilde eller bakgrunnen så sier vi at bildet er en ny variabel som vi snart skal bruke
                 this.image = new Image();
                 this.image.src = color;
               }
-            //lager en masse variabler som skal bli brukt for å lage de forsjellige 
+            //lager en masse variabler som skal bli brukt for å lage de forsjellige ting senere 
             this.gamearea = myGameArea;
             this.width = width;
             this.height = height;
@@ -112,7 +114,8 @@ var myBackground;
                 }       
             }
             this.crashWith = function(otherobj) {
-                //lager masse variabler som representerer alle sidene til fugelen
+                //lager masse variabler som representerer alle sidene til fugelen 
+                //vi vil heller bruke variabler sånn at hvis vi endrer en ting et sted så trenger vi ikke endre det overalt og kanskje ødelege noe
                 var myleft = this.x;
                 var myright = this.x + (this.width);
                 var mytop = this.y;
@@ -152,6 +155,7 @@ var myBackground;
         myObsticales=[];
         //endrer timeren tilbake til det den var
         changeTimer();
+        //logger at du er død eller har reseta for å kunne debugge
         console.log('restart eller død')
         myGameArea.frameNo =  0;
         
@@ -163,8 +167,11 @@ var myBackground;
             //sletter alt på brettet
             myGameArea.clear();
 
+            //sier at konstant så skal vi gjøre speedX 1 mindre for at det skal se ut som at den beveger seg
             myBackground.speedX = -1;
+            //vi sjekker hva den nye posisjonen er 
             myBackground.newPos();    
+            //vi oppdaterer
             myBackground.update();
             var x, height, gap, minHeight, maxHeight, minGap, maxGap;
             //går gjennom alle rørene og sjekkor om du har kræsjet med dem
