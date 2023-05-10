@@ -150,6 +150,7 @@ var myBackground;
         myGamePiece.y = 200
         myGameArea.interval_ms = 10
         myObsticales=[];
+        //endrer timeren tilbake til det den var
         changeTimer();
         console.log('restart eller død')
         myGameArea.frameNo =  0;
@@ -232,7 +233,7 @@ var myBackground;
             hight_score.update();
 
 
-            //hvis frameNo er større en old_high_score så vil high scoren din bli større
+            //hvis frameNo er større en old_high_score så vil high scoren din bli større go så vil den oppdatere high scoren
             if ( old_high_score <= myGameArea.frameNo){
                 old_high_score= old_high_score + 1;
                 hight_score.text="high score:" + old_high_score;
